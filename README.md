@@ -1,0 +1,2 @@
+# ricardoorozco
+Taller python SETI
