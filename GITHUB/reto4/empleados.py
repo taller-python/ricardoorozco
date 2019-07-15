@@ -1,6 +1,7 @@
+"""Definicion de clase para procesamiento JSON de datos de empleado"""
 from jsonschema import validate
 
-schemaemployee = {
+SCHEMAEMPLOYEE = {
     "type": "object",
     "required": [
         "tipodocumento",
@@ -22,9 +23,11 @@ schemaemployee = {
 }
 
 class Employee(object):
+    "clase para gestion de datos de empleado en objeto JSON"
     __objectemployee = {}
 
     def __init__(self):
+        "Constructor clase"
         self.__objectemployee = {
             'tipodocumento': '',
             'documento': '',
@@ -51,6 +54,7 @@ class Employee(object):
 #        }
 
     def setdata(self, data, datainfo):
+        "Metodo para carga o asignacion de datos de empleado por campo especifico"
         try:
             if data == 'valorhora' or data == 'horastrabajadas':
                 self.__objectemployee[data] = int(datainfo)
@@ -66,12 +70,12 @@ class Employee(object):
                 'status', 'error',
                 'message', str(err)
             }
-        finally:
-            return response
+        return response
 
     def setemployee(self, objjson):
+        "Metodo para carga o asignacion de datos de empleado por JSON completo"
         try:
-            validate(instance = objjson, schema = schemaemployee)
+            validate(instance=objjson, schema=SCHEMAEMPLOYEE)
             self.__objectemployee = objjson
             respassig = self.assignsalary()
 
@@ -87,10 +91,10 @@ class Employee(object):
                 'status': 'error',
                 'message': str(err)
             }
-        finally:
-            return response
+        return response
 
     def assignsalary(self):
+        "Metodo para calculo de salario"
         try:
             self.__objectemployee['salario'] = self.__objectemployee['valorhora'] * self.__objectemployee['horastrabajadas']
             response = {
@@ -102,12 +106,13 @@ class Employee(object):
                 'status', 'error',
                 'message', str(err)
             }
-        finally:
-            return response
+        return response
 
     def getdata(self, data):
+        "Metodo para retornar el valor de unn campo del objeto empleado"
         return self.__objectemployee[data]
 
     def getemployee(self):
+        "Metodo para retornar la estructura JSON con los datos de empleado"
         return self.__objectemployee
 

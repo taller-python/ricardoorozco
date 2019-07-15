@@ -3,6 +3,7 @@ import os
 import xlrd
 
 def calculo_aritmetico_excel():
+    "funcion encargada de aplicar la operacion aritmetica del archivo excel"
     try:
         cwd = os.getcwd()
         print('Directorio local: ' + str(cwd))
@@ -30,13 +31,14 @@ def calculo_aritmetico_excel():
                                 resultado = cell_a / cell_b
 
                             fout.write(str(resultado) + '\n')
-                        except Exception as err:
+                        except ArithmeticError as err:
+                            fout.write('Error\n')
+                        except ValueError as err:
                             fout.write('Error\n')
                 print('Proceso finalizado. Se genero el archivo "resultado'+sheet.name+'.txt" con el resultado de la operacion')
-            except Exception as err:
+            except FileNotFoundError as err:
                 print('Error en archivo: {0}'.format(0))
             finally:
                 fout.close()
-    except Exception as err:
+    except OSError as err:
         print('Error: {0}'.format(err))
-

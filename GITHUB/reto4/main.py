@@ -1,11 +1,13 @@
-import basededatos
-import empleados
+"""Metodo principal para ejecucion del taller4"""
 import json
 from bson import json_util
+import basededatos
+import empleados
 
 def main():
+    "Metodo principal de ejecucion del taller"
     menu = 0
-    objMongo = basededatos.DataBaseMongo()
+    objmongo = basededatos.DataBaseMongo()
     empleado = empleados.Employee()
 
     while menu != 5:
@@ -25,7 +27,7 @@ def main():
                 result = empleado.setdata('valorhora', int(input('Valor hora: ')))
                 empleado.assignsalary()
 
-                result = objMongo.insert(empleado.getemployee())
+                result = objmongo.insert(empleado.getemployee())
                 if result['status'] == 'ok':
                     print('Empledo creado - Id: ' + result['Id'])
                 else:
@@ -36,7 +38,7 @@ def main():
             try:
                 result = empleado.setdata('tipodocumento', input('Tipo Documento: '))
                 result = empleado.setdata('documento', input('Documento: '))
-                result = objMongo.find(empleado.getemployee())
+                result = objmongo.find(empleado.getemployee())
 
                 if result['status'] == 'ok':
                     print(json.dumps(result['empleado'], indent=4, default=json_util.default))
@@ -49,7 +51,7 @@ def main():
             try:
                 result = empleado.setdata('tipodocumento', input('Tipo Documento: '))
                 result = empleado.setdata('documento', input('Documento: '))
-                result = objMongo.delete(empleado.getemployee())
+                result = objmongo.delete(empleado.getemployee())
 
                 if result['status'] == 'ok':
                     print(result['message'])
@@ -70,7 +72,7 @@ def main():
                 result = empleado.setdata('valorhora', int(input('Valor hora: ')))
                 empleado.assignsalary()
 
-                result = objMongo.update(empleado.getemployee())
+                result = objmongo.update(empleado.getemployee())
 
                 if result['status'] == 'ok':
                     print(result['message'])
