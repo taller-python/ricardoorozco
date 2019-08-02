@@ -115,4 +115,3 @@ class Employee(object):
     def getemployee(self):
         "Metodo para retornar la estructura JSON con los datos de empleado"
         return self.__objectemployee
-

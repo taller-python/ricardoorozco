@@ -1,8 +1,8 @@
-"""Clase encargada de desplegar el servicio REST para exponer los metodos de DB"""
+"""Programa principal que despliega el servicio REST que expone los metodos de DB"""
 import json
 from bson import json_util
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
 import basededatos
 import empleados
@@ -83,9 +83,7 @@ class EmployeeId(Resource):
             empleado = empleados.Employee()
 
             if result['status'] == 'ok':
-                #employee = result['empleado']
                 empleado.setemployee(result['empleado'])
-                #return jsonify(tipodocumento=empleado.getdata('tipodocumento'), documento=employee['documento'],nombre=employee['nombre'],apellidos=employee['apellidos'],cargo=employee['cargo'],correo=employee['correo'],valorhora=employee['valorhora'],horastrabajadas=employee['horastrabajadas'])
                 return empleado.getemployee()
             return result['message']
 
